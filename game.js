@@ -15,29 +15,67 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
+/*
 function getHumanChoice() {
     return prompt("What's your move? ");
 }
+*/
 
 function playRound(humanChoice, computerChoice) {
     let newHumanChoice = humanChoice.toLowerCase();
+    let div;
     if (newHumanChoice == computerChoice) {
-        console.log(`A tie between ${humanChoice}!`);
+        div = document.createElement("div");
+        div.textContent = `A tie between ${humanChoice}!`;
     }
 
     else if ((newHumanChoice == "rock" && computerChoice == "scissors") ||
         (newHumanChoice == "paper" && computerChoice == "rock") ||
         (newHumanChoice == "scissors" && computerChoice == "paper")) {
-        console.log(`You win! ${newHumanChoice} beats ${computerChoice}`);
-        return "human";
+        div = document.createElement("div");
+        div.textContent = `You win! ${newHumanChoice} beats ${computerChoice}!`;
+        humanScore++;
     }
     else {
-        console.log(`You lose! ${computerChoice} beats ${newHumanChoice}`);
-        return "computer"
+        div = document.createElement("div");
+        div.textContent = `You lose! ${computerChoice} beats ${newHumanChoice}!`
+        computerScore++;
     }
+    const result = document.querySelector(".results");
+    result.appendChild(div);
+    totalScore++;
+    const human = document.querySelector(".human-score");
+    human.textContent = humanScore;
+    const computer = document.querySelector(".computer-score");
+    computer.textContent = computerScore;
+    const total = document.querySelector(".total-score");
+    total.textContent = totalScore;
+
+    const res = document.createElement("div");
+    res.style.color = "blue";
+    if (humanScore === 5) {
+        res.textContent = "You win!";
+    }
+    else if (computerScore === 5) {
+        res.textContent = "You lose!";
+    }
+    result.appendChild(res);
 
 }
 
+let humanScore = 0;
+let computerScore = 0;
+let totalScore = 0;
+
+const rock = document.querySelector(".rock");
+rock.addEventListener("click", () => { playRound("rock", getComputerChoice()) });
+const scissors = document.querySelector(".scissors");
+scissors.addEventListener("click", () => { playRound("scissors", getComputerChoice()) });
+const paper = document.querySelector(".paper");
+paper.addEventListener("click", () => { playRound("paper", getComputerChoice()) });
+
+
+/*
 function playGame() {
     let humanScore = 0;
     let computerScore = 0;
@@ -66,3 +104,4 @@ function playGame() {
 }
 
 playGame();
+*/
